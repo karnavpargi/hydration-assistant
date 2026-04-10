@@ -65,3 +65,44 @@ See the table above for all available settings and their descriptions.
 
 - No accounts, telemetry, or remote APIs.
 - If `hydration.analyticsEnabled` is enabled, the extension writes a small JSON file under its **global storage** directory (see **Developer: Open Extension Storage Folder** in the Command Palette, then the folder for this extension). You can disable analytics anytime.
+
+## Development
+
+```bash
+npm install
+npm run compile
+npm test
+# After editing media/hydration-assistant-logo.svg:
+npm run build:branding && npm run verify:branding
+```
+
+Press **F5** in this folder to launch an Extension Development Host with the extension loaded.
+
+## Version bump on merge
+
+[`.github/workflows/bump-version-on-merge.yml`](.github/workflows/bump-version-on-merge.yml) runs on every push to **`master`** or **`main`**. It bumps the **patch** version in `package.json` and `package-lock.json`, commits with `[skip ci]`, and pushes back to the same branch so the workflow does not loop.
+
+If `master`/`main` is protected, allow **GitHub Actions** to push (or use a PAT in a secret and adjust checkout). For minor/major bumps, change the version locally or adjust the workflow (`npm version minor`, etc.).
+
+## Branding assets
+
+**Never edit** `icon-128.png` or `logo-readme.png` by hand. They must be **byte-identical** to the output of rasterizing [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) through the single pipeline in [`scripts/branding.mjs`](scripts/branding.mjs) (Sharp, fixed sizes: 128×128 and width 320).
+
+| File | Role |
+|------|------|
+| [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) | **Only** hand-edited logo asset |
+| [`media/icon-128.png`](media/icon-128.png) | Generated — Marketplace / `package.json` icon |
+| [`media/logo-readme.png`](media/logo-readme.png) | Generated — README hero (Marketplace disallows SVG in README) |
+
+After any SVG change:
+
+```bash
+npm run build:branding
+npm run verify:branding
+```
+
+`npm test` and CI run `verify:branding` so mismatched PNGs fail the build.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
