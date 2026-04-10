@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import type { HydrationSettings } from "../config/hydrationSettings";
 import type { ActivitySnapshot, TickResult } from "../engine/ReminderEngine";
 import { ReminderEngine } from "../engine/ReminderEngine";
+import { pickHydrationReminderMessage } from "./hydrationMessages";
 import { playSoftSound } from "./playSoftSound";
 
 export class NotificationService implements vscode.Disposable {
@@ -52,10 +53,7 @@ export class NotificationService implements vscode.Disposable {
     onSnooze: (minutes: number) => void,
     onDismiss: () => void
   ): Promise<void> {
-    const msg =
-      result.urgency === "high"
-        ? `⚡ High activity detected (~${result.activeMinutesRounded} min). Take a sip of water.`
-        : `💧 You have been coding for ~${result.activeMinutesRounded} min. Take a sip of water.`;
+    const msg = pickHydrationReminderMessage(result.urgency, result.activeMinutesRounded);
 
     if (settings.enableSound) {
       void playSoftSound();

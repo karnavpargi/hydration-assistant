@@ -2,9 +2,10 @@
   "name": "hydration-assistant",
   "displayName": "Hydration Assistant",
   "description": "Context-aware hydration reminders based on your coding activity. Local-only; no telemetry.",
-  "version": "0.1.0",
-  "publisher": "local",
+  "version": "0.1.1",
+  "publisher": "karnav",
   "author": "Karnav Pargi",
+  "icon": "media/icon-128.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -53,7 +54,7 @@
         },
         "hydration.enableSound": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Play a short sound when a reminder is shown (best-effort per OS)."
         },
         "hydration.mode": {
@@ -103,10 +104,12 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run compile && npm run build:branding && npm run verify:branding",
+    "build:branding": "node scripts/generate-branding.mjs",
+    "verify:branding": "node scripts/verify-branding.mjs",
     "compile": "node esbuild.config.js",
     "watch": "node esbuild.config.js --watch",
-    "pretest": "tsc -p tsconfig.test.json",
+    "pretest": "npm run verify:branding && tsc -p tsconfig.test.json",
     "test": "mocha \"out-test/**/*.test.js\"",
     "lint": "eslint src --ext ts",
     "format": "prettier --write \"src/**/*.ts\""
@@ -122,6 +125,7 @@
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
     "prettier": "^3.2.4",
+    "sharp": "^0.33.5",
     "typescript": "^5.3.3"
   },
   "galleryBanner": {

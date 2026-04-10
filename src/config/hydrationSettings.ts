@@ -16,7 +16,7 @@ export interface HydrationSettings {
 export const DEFAULT_HYDRATION_SETTINGS: HydrationSettings = {
   intervalMinutes: 25,
   idleResetMinutes: 5,
-  enableSound: false,
+  enableSound: true,
   mode: "smart",
   sensitivity: "medium",
   snoozeMinutes: 15,

@@ -1,5 +1,9 @@
 # Hydration Assistant
 
+<p align="center">
+  <img src="media/logo-readme.png" alt="Hydration Assistant logo" width="320" />
+</p>
+
 **Repository:** [github.com/karnavpargi/hydration-assistant](https://github.com/karnavpargi/hydration-assistant) · **Author:** Karnav Pargi
 
 Context-aware hydration reminders for Visual Studio Code. Reminders follow **focused coding time** (not a blind wall-clock timer): continuous activity builds toward a reminder; going idle or switching away pauses or resets the cycle.
@@ -26,13 +30,36 @@ Context-aware hydration reminders for Visual Studio Code. Reminders follow **foc
 |----|---------|-------------|
 | `hydration.interval` | `25` | Minutes of continuous **focused, non-idle** activity before a reminder. |
 | `hydration.idleResetMinutes` | `5` | Minutes without activity before the work session resets. |
-| `hydration.enableSound` | `false` | Plays a short system sound when a reminder appears (best-effort per OS). |
+| `hydration.enableSound` | `true` | Plays a short system sound when a reminder appears (best-effort per OS). |
 | `hydration.mode` | `smart` | `smart`: adapt using activity signals; `fixed`: use `interval` only. |
 | `hydration.sensitivity` | `medium` | How strongly rapid edits and file switching affect smart timing. |
 | `hydration.snoozeMinutes` | `15` | Default snooze length from the toast or the Snooze command. |
 | `hydration.suppressInPresentation` | `false` | When `true`, no reminders are shown. |
 | `hydration.tickIntervalSeconds` | `15` | How often the extension evaluates state (seconds). |
 | `hydration.analyticsEnabled` | `true` | When `true`, writes local metrics JSON only (see privacy). |
+### Example: Workspace settings in `.vscode/settings.json`
+
+To configure reminders for this extension in your current project, add options to `.vscode/settings.json` like so:
+
+```json
+{
+  // Minutes of focused activity before hydration reminder
+  "hydration.interval": 60,
+
+  // Sound is on by default; set false for silent reminders only
+  "hydration.enableSound": false,
+
+  // Suppress reminders during presentations/demos
+  "hydration.suppressInPresentation": true,
+
+  // Use "fixed" mode if you want a strict timer instead of smart adjustment
+  "hydration.mode": "fixed"
+}
+```
+
+See the table above for all available settings and their descriptions.
+
+
 
 ## Privacy
 
@@ -45,18 +72,36 @@ Context-aware hydration reminders for Visual Studio Code. Reminders follow **foc
 npm install
 npm run compile
 npm test
+# After editing media/hydration-assistant-logo.svg:
+npm run build:branding && npm run verify:branding
 ```
 
 Press **F5** in this folder to launch an Extension Development Host with the extension loaded.
 
-## Packaging
+## Version bump on merge
 
-Set `publisher` in `package.json` to your Marketplace publisher id, then:
+[`.github/workflows/bump-version-on-merge.yml`](.github/workflows/bump-version-on-merge.yml) runs on every push to **`master`** or **`main`**. It bumps the **patch** version in `package.json` and `package-lock.json`, commits with `[skip ci]`, and pushes back to the same branch so the workflow does not loop.
+
+If `master`/`main` is protected, allow **GitHub Actions** to push (or use a PAT in a secret and adjust checkout). For minor/major bumps, change the version locally or adjust the workflow (`npm version minor`, etc.).
+
+## Branding assets
+
+**Never edit** `icon-128.png` or `logo-readme.png` by hand. They must be **byte-identical** to the output of rasterizing [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) through the single pipeline in [`scripts/branding.mjs`](scripts/branding.mjs) (Sharp, fixed sizes: 128×128 and width 320).
+
+| File | Role |
+|------|------|
+| [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) | **Only** hand-edited logo asset |
+| [`media/icon-128.png`](media/icon-128.png) | Generated — Marketplace / `package.json` icon |
+| [`media/logo-readme.png`](media/logo-readme.png) | Generated — README hero (Marketplace disallows SVG in README) |
+
+After any SVG change:
 
 ```bash
-npm install -g @vscode/vsce
-vsce package
+npm run build:branding
+npm run verify:branding
 ```
+
+`npm test` and CI run `verify:branding` so mismatched PNGs fail the build.
 
 ## License
 

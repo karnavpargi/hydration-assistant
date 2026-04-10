@@ -1,0 +1,22 @@
+# Ensures media/icon-128.png and media/logo-readme.png byte-match sharp rasterization of hydration-assistant-logo.svg
+name: Verify branding PNGs
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run verify:branding
+      - run: npm test

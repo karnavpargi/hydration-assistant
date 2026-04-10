@@ -1,5 +1,6 @@
 .vscode/**
 .vscode-test/**
+.github/**
 .cursor/**
 src/**
 out/**
@@ -12,6 +13,7 @@ prettier.config.cjs
 tsconfig.json
 tsconfig.test.json
 esbuild.config.js
+scripts/**
 **/*.map
 **/*.ts
 *.vsix
