@@ -2,7 +2,7 @@
   "name": "hydration-assistant",
   "displayName": "Hydration Assistant",
   "description": "Context-aware hydration reminders based on your coding activity. Local-only; no telemetry.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "karnav",
   "author": "Karnav Pargi",
   "icon": "media/icon-128.png",
