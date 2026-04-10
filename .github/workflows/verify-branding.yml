@@ -1,4 +1,4 @@
-# Ensures media/icon-128.png and media/logo-readme.png byte-match sharp rasterization of hydration-assistant-logo.svg
+# Ensures media/icon-128.png byte-matches Sharp resize of media/logo-readme.png
 name: Verify branding PNGs
 
 on:

@@ -4,7 +4,7 @@
   <img src="media/logo-readme.png" alt="Hydration Assistant logo" width="320" />
 </p>
 
-**Repository:** [github.com/karnavpargi/hydration-assistant](https://github.com/karnavpargi/hydration-assistant) · **Author:** Karnav Pargi
+**Repository:** [github.com/karnavpargi/hydration-assistant](https://github.com/karnavpargi/hydration-assistant) · **Author:** Karnav Pargi · **VS Marketplace:** [Hydration Assistant](https://marketplace.visualstudio.com/items?itemName=karnav.hydration-assistant)
 
 Context-aware hydration reminders for Visual Studio Code. Reminders follow **focused coding time** (not a blind wall-clock timer): continuous activity builds toward a reminder; going idle or switching away pauses or resets the cycle.
 

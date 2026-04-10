@@ -1,6 +1,6 @@
 /**
- * Single source of truth for SVG → PNG rasterization.
- * icon-128.png and logo-readme.png MUST match buffers from this pipeline exactly.
+ * Single source of truth: media/logo-readme.png (master artwork).
+ * icon-128.png MUST be byte-identical to Sharp resize from that PNG — no other code path.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -10,30 +10,19 @@ import sharp from "sharp";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const projectRoot = path.join(__dirname, "..");
-export const svgPath = path.join(projectRoot, "media", "hydration-assistant-logo.svg");
+/** Hand-edited logo; README and Marketplace hero use this file. */
+export const logoReadmePath = path.join(projectRoot, "media", "logo-readme.png");
 
-/** Each output is produced only via sharp(svg) with these options — no other code path. */
-export const BRANDING_OUTPUTS = [
-  {
-    key: "icon-128",
-    file: "media/icon-128.png",
-    render: (svgBuf) => sharp(svgBuf).resize(128, 128).png().toBuffer(),
-  },
-  {
-    key: "logo-readme",
-    file: "media/logo-readme.png",
-    render: (svgBuf) => sharp(svgBuf).resize(320).png().toBuffer(),
-  },
-];
+export const ICON_OUTPUT = {
+  key: "icon-128",
+  file: "media/icon-128.png",
+};
 
 /**
- * @returns {Promise<Record<string, Buffer>>}
+ * Expected bytes for the extension icon (128×128) derived from logo-readme.png.
+ * @returns {Promise<Buffer>}
  */
-export async function pngBuffersFromSvgFile() {
-  const svg = fs.readFileSync(svgPath);
-  const out = {};
-  for (const spec of BRANDING_OUTPUTS) {
-    out[spec.key] = await spec.render(svg);
-  }
-  return out;
+export async function icon128BufferFromLogoReadme() {
+  const png = fs.readFileSync(logoReadmePath);
+  return sharp(png).resize(128, 128).png().toBuffer();
 }

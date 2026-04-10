@@ -72,7 +72,7 @@ See the table above for all available settings and their descriptions.
 npm install
 npm run compile
 npm test
-# After editing media/hydration-assistant-logo.svg:
+# After replacing media/logo-readme.png:
 npm run build:branding && npm run verify:branding
 ```
 
@@ -86,15 +86,11 @@ If `master`/`main` is protected, allow **GitHub Actions** to push (or use a PAT 
 
 ## Branding assets
 
-**Never edit** `icon-128.png` or `logo-readme.png` by hand. They must be **byte-identical** to the output of rasterizing [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) through the single pipeline in [`scripts/branding.mjs`](scripts/branding.mjs) (Sharp, fixed sizes: 128×128 and width 320).
+**Source:** edit only [`media/logo-readme.png`](media/logo-readme.png) (master artwork for README and docs).
 
-| File | Role |
-|------|------|
-| [`media/hydration-assistant-logo.svg`](media/hydration-assistant-logo.svg) | **Only** hand-edited logo asset |
-| [`media/icon-128.png`](media/icon-128.png) | Generated — Marketplace / `package.json` icon |
-| [`media/logo-readme.png`](media/logo-readme.png) | Generated — README hero (Marketplace disallows SVG in README) |
+**Generated:** [`media/icon-128.png`](media/icon-128.png) is produced only by resizing that PNG to 128×128 in [`scripts/branding.mjs`](scripts/branding.mjs). Do not edit `icon-128.png` by hand.
 
-After any SVG change:
+After you replace `logo-readme.png`:
 
 ```bash
 npm run build:branding

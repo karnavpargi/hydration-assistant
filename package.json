@@ -2,7 +2,7 @@
   "name": "hydration-assistant",
   "displayName": "Hydration Assistant",
   "description": "Context-aware hydration reminders based on your coding activity. Local-only; no telemetry.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "karnav",
   "author": "Karnav Pargi",
   "icon": "media/icon-128.png",
@@ -112,7 +112,8 @@
     "pretest": "npm run verify:branding && tsc -p tsconfig.test.json",
     "test": "mocha \"out-test/**/*.test.js\"",
     "lint": "eslint src --ext ts",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "build:package": " npm run compile && npx @vscode/vsce package"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
