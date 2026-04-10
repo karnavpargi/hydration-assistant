@@ -1,0 +1,147 @@
+{
+  "name": "hydration-assistant",
+  "displayName": "Hydration Assistant",
+  "description": "Context-aware hydration reminders based on your coding activity. Local-only; no telemetry.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "author": "Karnav Pargi",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "hydration.snooze",
+        "title": "Hydration: Snooze reminders"
+      },
+      {
+        "command": "hydration.resetSession",
+        "title": "Hydration: Reset session timer"
+      },
+      {
+        "command": "hydration.togglePresentation",
+        "title": "Hydration: Toggle presentation mode (suppress reminders)"
+      },
+      {
+        "command": "hydration.openSettings",
+        "title": "Hydration: Open settings"
+      }
+    ],
+    "configuration": {
+      "title": "Hydration",
+      "properties": {
+        "hydration.interval": {
+          "type": "number",
+          "default": 25,
+          "minimum": 5,
+          "maximum": 120,
+          "description": "Minutes of continuous focused activity before a reminder."
+        },
+        "hydration.idleResetMinutes": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 60,
+          "description": "Minutes without activity before the work session resets."
+        },
+        "hydration.enableSound": {
+          "type": "boolean",
+          "default": false,
+          "description": "Play a short sound when a reminder is shown (best-effort per OS)."
+        },
+        "hydration.mode": {
+          "type": "string",
+          "enum": [
+            "smart",
+            "fixed"
+          ],
+          "default": "smart",
+          "description": "smart: adapt to activity intensity; fixed: use interval only."
+        },
+        "hydration.sensitivity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "default": "medium",
+          "description": "How strongly rapid edits and file switching affect reminders."
+        },
+        "hydration.snoozeMinutes": {
+          "type": "number",
+          "default": 15,
+          "minimum": 1,
+          "maximum": 120,
+          "description": "Default snooze duration when using Snooze from a reminder or command."
+        },
+        "hydration.suppressInPresentation": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, no reminders are shown (e.g. during demos)."
+        },
+        "hydration.tickIntervalSeconds": {
+          "type": "number",
+          "default": 15,
+          "minimum": 5,
+          "maximum": 60,
+          "description": "How often the extension evaluates session state (seconds)."
+        },
+        "hydration.analyticsEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Store reminder counts and active time locally on this machine only."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "pretest": "tsc -p tsconfig.test.json",
+    "test": "mocha \"out-test/**/*.test.js\"",
+    "lint": "eslint src --ext ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "galleryBanner": {
+    "color": "#1e3a5f",
+    "theme": "dark"
+  },
+  "keywords": [
+    "hydration",
+    "wellness",
+    "health",
+    "break",
+    "reminder"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karnavpargi/hydration-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/karnavpargi/hydration-assistant/issues"
+  },
+  "homepage": "https://github.com/karnavpargi/hydration-assistant"
+}
